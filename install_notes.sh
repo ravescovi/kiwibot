@@ -4,7 +4,7 @@ sudo apt-get install -y python-tk python-sip vim git terminator python-pip pytho
 python-virtualenv screen tmux openssh-server libssl-dev libusb-1.0-0-dev libgtk-3-dev libglfw3-dev
 
 mkdir ~/workspace
-cd workspace
+cd ~/workspace
 
 mkdir -p ~/miniconda3
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
@@ -40,7 +40,7 @@ export ENV=ianbot2
 
 conda create -n $ENV python=3.8
 
-##no idea why the path continally gets broken
+##no idea why the path continually gets broken
 PATH=$(echo "$PATH" | sed -e 's|/home/locobot/.local/bin||')
 
 
