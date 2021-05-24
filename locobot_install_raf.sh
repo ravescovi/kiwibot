@@ -42,8 +42,13 @@ git clone https://github.com/IntelRealSense/realsense-ros.git
 cd realsense-ros/
 git checkout 2.3.0
 
+mkdir release
+cd release
+
 make clean
-make -DCMAKE_BUILD_TYPE=Release
+cmake ../realsense2_camera/ -DENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release
+
+
 
 
 cd ~/workspace/pyrobot/robots/LoCoBot/install
