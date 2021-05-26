@@ -1,7 +1,7 @@
 sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist-upgrade
 
-sudo apt-get install -y python-tk python-sip vim git terminator python-pip python-dev
-sudo apt-get install -y python-virtualenv screen tmux openssh-server libssl-dev libusb-1.0-0-dev libgtk-3-dev libglfw3-dev
+sudo apt-get install -y python-tk python-sip vim git terminator python3-pip python3-dev
+sudo apt-get install -y screen tmux openssh-server libssl-dev libusb-1.0-0-dev libgtk-3-dev libglfw3-dev
 
 mkdir ~/workspace
 cd workspace
@@ -15,19 +15,24 @@ rm -rf ./miniconda.sh
 ##activating conda
 bash
 
+conda install pip 
+conda update -n base -c defaults conda
+
+
+
 
 ##Installing System libs
 sudo apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
-sudo add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main" -u
+sudo add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo focal main" -u
 sudo apt-get update
-version="2.33.1-0~realsense0.2140"
+#version="2.33.1-0~realsense0.2140"
 sudo apt-get -y install librealsense2-udev-rules=${version}
-sudo apt-get -y install librealsense2-dkms=1.3.11-0ubuntu1
-sudo apt-get -y install librealsense2=${version}
-sudo apt-get -y install librealsense2-gl=${version}
-sudo apt-get -y install librealsense2-utils=${version}
-sudo apt-get -y install librealsense2-dev=${version}
-sudo apt-get -y install librealsense2-dbg=${version}
+sudo apt-get -y install librealsense2-dkms
+sudo apt-get -y install librealsense2
+sudo apt-get -y install librealsense2-gl
+sudo apt-get -y install librealsense2-utils
+sudo apt-get -y install librealsense2-dev
+sudo apt-get -y install librealsense2-dbg
 sudo apt-mark hold librealsense2*
 
 #https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md
@@ -36,6 +41,7 @@ sudo apt-mark hold librealsense2*
 ##downloading stuff
 git clone https://github.com/facebookresearch/pyrobot.git
 git clone --recursive https://github.com/facebookresearch/droidlet.git
+git clone https://github.com/IntelRealSense/realsense-ros.git
 
 
 export ENV=rafbot
@@ -49,11 +55,14 @@ conda config --env --add channels pytorch
 conda config --env --set channel_priority strict
 
 #Installing basic deps 
-conda install -y numpy scipy matplotlib ipython Pillow 
+conda install -y numpy scipy matplotlib ipython Pillow #en-core-web-sm
 conda install -y compilers cmake pkg-config make ninja catkin_tools
 
+#and some not so basic (for droidlet)
+#conda install -c conda-forge spacy-model-en_core_web_sm
 
-pip install -r ~/workspace/droidlet/locobot/requirements.txt
+#pip install -r ~/workspace/droidlet/locobot/requirements.txt
+pip install bezier
 
 ##pain1
 #conda install -y opencv
@@ -64,32 +73,58 @@ pip install -r ~/workspace/droidlet/locobot/requirements.txt
 
 ##INSTALLING ROS
 ## https://github.com/RoboStack/ros-noetic
-conda install -y ros-noetic-desktop
-conda install -y ros-noetic-ddynamic-reconfigure
-conda install -y ros-noetic-librealsense2
+#conda install -y ros-noetic-desktop ros-noetic-ddynamic-reconfigure ros-noetic-librealsense2
+
+
+# 	"ros-$ROS_NAME-dynamixel-motor" 
+# 	"ros-$ROS_NAME-moveit" 
+# 	"ros-$ROS_NAME-trac-ik"
+# 	"ros-$ROS_NAME-ar-track-alvar"
+# 	"ros-$ROS_NAME-move-base"
+# 	"ros-$ROS_NAME-ros-control"
+# 	"ros-$ROS_NAME-gazebo-ros-control"
+# 	"ros-$ROS_NAME-ros-controllers"
+# 	"ros-$ROS_NAME-navigation"
+# 	"ros-$ROS_NAME-rgbd-launch"
+# 	"ros-$ROS_NAME-kdl-parser-py"
+# 	"ros-$ROS_NAME-orocos-kdl"
+# 	"ros-$ROS_NAME-python-orocos-kdl"
+#   	"ros-$ROS_NAME-ddynamic-reconfigure"
+# 	#"ros-$ROS_NAME-libcreate"
 
 ##this version of opencv breaks the installation but it is necessary for orb_slam2
 ##conda install -y -c conda-forge opencv==3.4.9
 
-pip install bezier
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-conda deactivate    
-conda activate $ENV
+sudo apt update
+
+sudo apt install -y ros-noetic-desktop-full 
+sudo apt install -y rospack-tools python3-rosdep python3-roslaunch 
+sudo apt install -y python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
+sudo apt install -y ros-noetic-rgbd-launch
+
+source /opt/ros/noetic/setup.bash
+
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+
+# conda deactivate    
+# conda activate $ENV
 
 
 
-rosdep init 
+sudo rosdep init 
 rosdep update
 
 
 
-git clone https://github.com/IntelRealSense/realsense-ros.git
-cd realsense-ros/
+cd ~/workspace/realsense-ros/
 git checkout 2.3.0
-
 mkdir release
 cd release
-
 make clean
 cmake ../realsense2_camera/  -DCMAKE_BUILD_TYPE=Release
 sudo make install
@@ -135,10 +170,17 @@ cd ~/workspace/
 rosdep update 
 rosdep install --from-paths pyrobot -i -y
 
+cd ~/workspace/Pangolin
+conda install -c conda-forge glew
+mkdir build
+cd build
+cmake ..
+cmake --build .
+
 cd ~/workspace/pyrobot/robots/LoCoBot/thirdparty/ORB_SLAM2
 ./build.sh
-echo "export ORBSLAM2_LIBRARY_PATH=${ORB_SLAM2_PATH}" >> ~/.bashrc
-export ORBSLAM2_LIBRARY_PATH=${ORB_SLAM2_PATH}
+echo "export ORBSLAM2_LIBRARY_PATH=~/workspace/pyrobot/robots/LoCoBot/thirdparty/ORB_SLAM2" >> ~/.bashrc
+export ORBSLAM2_LIBRARY_PATH=$~/workspace/pyrobot/robots/LoCoBot/thirdparty/ORB_SLAM2
 
 
 cd ~/workspace/
@@ -183,17 +225,19 @@ rm -rf yujin_ocs
 
 
 ##???
-#sudo apt-get install ros-noetic-kobuki-* -y
-#sudo apt-get install ros-noetic-ecl-streams -y
+sudo apt-get install ros-noetic-kobuki-* -y
+sudo apt-get install ros-noetic-ecl-streams -y
 
 
 
 ##DROIDLET Installation
-# cd ~/workspace/droidlet
-# pip install -r ~/workspace/droidlet/locobot/requirements.txt
-# python setup.py develop 
+cd ~/workspace/droidlet
+python setup.py develop 
 
 
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+sudo apt update
 
 cd ~/workspace
 chmod +x pyrobot/robots/LoCoBot/locobot_navigation/orb_slam2_ros/scripts/gen_cfg.py
@@ -210,4 +254,6 @@ sudo service udev restart
 sudo udevadm trigger
 sudo usermod -a -G dialout $USER
 
+export ROS_PACKAGE_PATH=/home/locobot/workspace
 
+roslaunch locobot_calibration calibrate.launch base:=kobuki
