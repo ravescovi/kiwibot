@@ -4,7 +4,7 @@ sudo apt-get install -y python-tk python-sip vim git terminator python3-pip pyth
 sudo apt-get install -y screen tmux openssh-server libssl-dev libusb-1.0-0-dev libgtk-3-dev libglfw3-dev
 
 mkdir ~/workspace
-cd workspace
+cd ~/workspace
 
 mkdir -p /miniconda3
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
@@ -168,6 +168,13 @@ git clone https://github.com/ravescovi/ORB_SLAM2.git
 
 cd ~/workspace/
 rosdep update 
+
+# Following gives error:
+#  ERROR: the following packages/stacks could not have their rosdep keys resolved
+#  to system dependencies:
+#  ca_driver: Cannot locate rosdep definition for [libcreate]
+# Maybe relevant?
+# https://answers.ros.org/question/336247/problems-installing-the-create_autonomy-package-on-ubuntu-1404/
 rosdep install --from-paths pyrobot -i -y
 
 cd ~/workspace/Pangolin
