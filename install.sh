@@ -73,20 +73,20 @@ if [ $(dpkg-query -W -f='${Status}' librealsense2 2>/dev/null | grep -c "ok inst
     version="2.40.0-0~realsense0.3815"
   fi
 
-sudo apt -y install librealsense2-udev-rules=${version}
-sudo apt -y install librealsense2-dkms
-sudo apt -y install librealsense2=${version}
-sudo apt -y install librealsense2-gl=${version}
-sudo apt -y install librealsense2-gl-dev=${version}
-sudo apt -y install librealsense2-gl-dbg=${version}
-sudo apt -y install librealsense2-net=${version}
-sudo apt -y install librealsense2-net-dev=${version}
-sudo apt -y install librealsense2-net-dbg=${version}
-sudo apt -y install librealsense2-utils=${version}
-sudo apt -y install librealsense2-dev=${version}
-sudo apt -y install librealsense2-dbg=${version}
-sudo apt-mark hold librealsense2*
-sudo apt -y install ros-$ROS_NAME-ddynamic-reconfigure
+  sudo apt -y install librealsense2-udev-rules=${version}
+  sudo apt -y install librealsense2-dkms
+  sudo apt -y install librealsense2=${version}
+  sudo apt -y install librealsense2-gl=${version}
+  sudo apt -y install librealsense2-gl-dev=${version}
+  sudo apt -y install librealsense2-gl-dbg=${version}
+  sudo apt -y install librealsense2-net=${version}
+  sudo apt -y install librealsense2-net-dev=${version}
+  sudo apt -y install librealsense2-net-dbg=${version}
+  sudo apt -y install librealsense2-utils=${version}
+  sudo apt -y install librealsense2-dev=${version}
+  sudo apt -y install librealsense2-dbg=${version}
+  sudo apt-mark hold librealsense2*
+  sudo apt -y install ros-$ROS_NAME-ddynamic-reconfigure
 else
   echo "librealsense2 already installed!"
 fi
@@ -111,7 +111,7 @@ fi
 source $REALSENSE_WS/devel/setup.bash
 
 # Step 3: Install apriltag ROS Wrapper
-APRILTAG_WS=~/apriltag_ws
+APRILTAG_WS=~/workspace/apriltag_ws
 if [ ! -d "$APRILTAG_WS/src" ]; then
   echo "Installing Apriltag ROS Wrapper..."
   mkdir -p $APRILTAG_WS/src
@@ -129,7 +129,7 @@ source $APRILTAG_WS/devel_isolated/setup.bash
 
 # Step 4: Install Locobot packages
 shopt -s extglob
-INTERBOTIX_WS=~/interbotix_ws
+INTERBOTIX_WS=~/workspace/interbotix_ws
 if [ ! -d "$INTERBOTIX_WS/src" ]; then
   echo "Installing ROS packages for the Interbotix Locobot..."
   mkdir -p $INTERBOTIX_WS/src
@@ -188,7 +188,7 @@ echo "NOTE: Remember to reboot the computer before using the robot!"
 
 
 
-LOCOBOT_FOLDER=~/low_cost_ws
+LOCOBOT_FOLDER=~/workspace/low_cost_ws
 if [ ! -d "$LOCOBOT_FOLDER/src" ]; then
 	mkdir -p $LOCOBOT_FOLDER/src
 	cd $LOCOBOT_FOLDER/src
