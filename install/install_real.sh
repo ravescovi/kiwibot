@@ -13,12 +13,6 @@ else
   exit 1
 fi
 
-echo "Ubuntu $ubuntu_version detected. ROS-$ROS_NAME chosen for installation.";
-
-# Update the system
-sudo apt update && sudo apt -y upgrade
-sudo apt -y autoremove
-
 # Step 2: Install Realsense packages
 
 # Step 2A: Install librealsense2

@@ -13,18 +13,6 @@ else
   exit 1
 fi
 
-echo "Ubuntu $ubuntu_version detected. ROS-$ROS_NAME chosen for installation.";
-
-echo -e "\e[1;33m ******************************************** \e[0m"
-echo -e "\e[1;33m The installation may take around 15 Minutes! \e[0m"
-echo -e "\e[1;33m ******************************************** \e[0m"
-sleep 4
-start_time="$(date -u +%s)"
-
-# Update the system
-sudo apt update && sudo apt -y upgrade
-sudo apt -y autoremove
-
 # Install some necessary core packages
 sudo apt -y install openssh-server
 if [ $ROS_NAME != "noetic" ]; then

@@ -13,9 +13,6 @@ else
   exit 1
 fi
 
-echo "Ubuntu $ubuntu_version detected. ROS-$ROS_NAME chosen for installation.";
-
-
 # Step 4: Install Locobot packages
 shopt -s extglob
 INTERBOTIX_WS=~/workspace/interbotix_ws
@@ -38,7 +35,7 @@ if [ ! -d "$INTERBOTIX_WS/src" ]; then
       cd ..
 
       ##this looks useless to us right now
-      git clone https://github.com/Slamtec/rplidar_ros.git
+      # git clone https://github.com/Slamtec/rplidar_ros.git
     fi
   fi
 

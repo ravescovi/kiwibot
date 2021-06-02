@@ -13,9 +13,6 @@ else
   exit 1
 fi
 
-echo "Ubuntu $ubuntu_version detected. ROS-$ROS_NAME chosen for installation.";
-
-
 LOCOBOT_FOLDER=~/workspace/low_cost_ws
 if [ ! -d "$LOCOBOT_FOLDER/src" ]; then
 	mkdir -p $LOCOBOT_FOLDER/src
@@ -139,4 +136,5 @@ sudo usermod -a -G dialout $USER
 
 
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/low_cost_ws/src/pyrobot
+
 

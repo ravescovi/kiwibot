@@ -13,12 +13,6 @@ else
   exit 1
 fi
 
-echo "Ubuntu $ubuntu_version detected. ROS-$ROS_NAME chosen for installation.";
-
-# Update the system
-sudo apt update && sudo apt -y upgrade
-sudo apt -y autoremove
-
 # Step 3: Install apriltag ROS Wrapper
 APRILTAG_WS=~/workspace/apriltag_ws
 if [ ! -d "$APRILTAG_WS/src" ]; then
