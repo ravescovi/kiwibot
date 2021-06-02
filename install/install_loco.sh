@@ -16,10 +16,6 @@ fi
 echo "Ubuntu $ubuntu_version detected. ROS-$ROS_NAME chosen for installation.";
 
 
-# Update the system
-sudo apt update && sudo apt -y upgrade
-sudo apt -y autoremove
-
 # Step 4: Install Locobot packages
 shopt -s extglob
 INTERBOTIX_WS=~/workspace/interbotix_ws
@@ -40,26 +36,45 @@ if [ ! -d "$INTERBOTIX_WS/src" ]; then
       cd yujin_ocs
       sudo rm -r !(yocs_cmd_vel_mux|yocs_controllers|yocs_velocity_smoother)
       cd ..
+
+      ##this looks useless to us right now
       git clone https://github.com/Slamtec/rplidar_ros.git
     fi
   fi
+
   git clone https://github.com/Interbotix/interbotix_ros_core.git
-  git clone https://github.com/Interbotix/interbotix_ros_rovers.git
-  git clone https://github.com/Interbotix/interbotix_ros_toolboxes.git
-  cd interbotix_ros_rovers && git checkout $ROS_NAME && cd ..
   rm interbotix_ros_core/interbotix_ros_xseries/CATKIN_IGNORE
+
+  git clone https://github.com/Interbotix/interbotix_ros_toolboxes.git
   rm interbotix_ros_toolboxes/interbotix_xs_toolbox/CATKIN_IGNORE
   rm interbotix_ros_toolboxes/interbotix_perception_toolbox/CATKIN_IGNORE
   rm interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface/CATKIN_IGNORE
+
+  git clone https://github.com/Interbotix/interbotix_ros_rovers.git
+  cd interbotix_ros_rovers && git checkout $ROS_NAME && cd ..
+
+  git clone https://github.com/Interbotix/interbotix_ros_manipulators
+  cd interbotix_ros_rovers && git checkout $ROS_NAME && cd ..
+
   cd interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_sdk
   sudo cp 99-interbotix-udev.rules /etc/udev/rules.d/
   sudo udevadm control --reload-rules && sudo udevadm trigger
+
   cd $INTERBOTIX_WS
-  rosdep install --from-paths src --ignore-src -r -y
-  catkin_make
+rosdep install --from-paths src --ignore-src -r -y
+catkin_make
   echo "source $INTERBOTIX_WS/devel/setup.bash" >> ~/.bashrc
 else
   echo "Interbotix Locobot ROS packages already installed!"
 fi
 source $INTERBOTIX_WS/devel/setup.bash
 shopt -u extglob
+
+# Step 5: Setup Environment Variables
+if [ -z "$ROS_IP" ]; then
+  echo "Setting up Environment Variables..."
+  echo 'export ROS_IP=$(echo `hostname -I | cut -d" " -f1`)' >> ~/.bashrc
+  echo -e 'if [ -z "$ROS_IP" ]; then\n\texport ROS_IP=127.0.0.1\nfi' >> ~/.bashrc
+else
+  echo "Environment variables already set!"
+fi
