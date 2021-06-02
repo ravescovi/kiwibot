@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>kiwibot_control</name>
-  <version>0.0.0</version>
-  <description>The kiwibot_control package</description>
+  <name>kiwibot</name>
+  <version>0.0.1</version>
+  <description>The Kiwibot package</description>
   <maintainer email="ravescovi@gmail.com">Rafael Vescovi</maintainer>
   <license>BSD</license>
 
@@ -22,7 +22,7 @@
   <build_export_depend>kobuki_node</build_export_depend>
   <build_export_depend>realsense2_camera</build_export_depend>
   <build_export_depend>rgbd_launch</build_export_depend>
-  
+
   <exec_depend>interbotix_xs_sdk</exec_depend>
   <exec_depend>interbotix_xs_modules</exec_depend>
   <exec_depend>interbotix_xslocobot_descriptions</exec_depend>
