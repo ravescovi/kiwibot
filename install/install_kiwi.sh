@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+
+
+shopt -s extglob
+KIWI_WS=~/workspace/KIWI_WS
+
+rm -rf $KIWI_WS
+mkdir -p $KIWI_WS/src
+
+
+cd $KIWI_WS/src
+git clone https://github.com/ravescovi/locobot
+
+cd $KIWI_WS
+rosdep install --from-paths src --ignore-src -r -y
+catkin_make
+echo "source $KIWI_WS/devel/setup.bash" >> ~/.bashrc
+
+source $KIWI_WS/devel/setup.bash
+shopt -u extglob
+
