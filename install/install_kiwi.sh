@@ -3,7 +3,7 @@
 
 
 shopt -s extglob
-KIWI_WS=~/workspace/KIWI_WS
+KIWI_WS=~/workspace/kiwibot_ws
 
 rm -rf $KIWI_WS
 mkdir -p $KIWI_WS/src
