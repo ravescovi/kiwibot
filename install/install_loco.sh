@@ -45,6 +45,7 @@ if [ ! -d "$INTERBOTIX_WS/src" ]; then
   git clone https://github.com/Interbotix/interbotix_ros_core.git
   rm interbotix_ros_core/interbotix_ros_xseries/CATKIN_IGNORE
 
+
   git clone https://github.com/Interbotix/interbotix_ros_toolboxes.git
   rm interbotix_ros_toolboxes/interbotix_xs_toolbox/CATKIN_IGNORE
   rm interbotix_ros_toolboxes/interbotix_perception_toolbox/CATKIN_IGNORE
@@ -54,7 +55,8 @@ if [ ! -d "$INTERBOTIX_WS/src" ]; then
   cd interbotix_ros_rovers && git checkout $ROS_NAME && cd ..
 
   git clone https://github.com/Interbotix/interbotix_ros_manipulators
-  cd interbotix_ros_rovers && git checkout $ROS_NAME && cd ..
+  cd interbotix_ros_manipulators && git checkout $ROS_NAME && cd ..
+  rm interbotix_ros_manipulators/interbotix_ros_xsarms/CATKIN_IGNORE
 
   cd interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_sdk
   sudo cp 99-interbotix-udev.rules /etc/udev/rules.d/
