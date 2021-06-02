@@ -13,23 +13,6 @@ else
   exit 1
 fi
 
-echo "Ubuntu $ubuntu_version detected. ROS-$ROS_NAME chosen for installation.";
-
-
-
-# Update the system
-sudo apt update && sudo apt -y upgrade
-sudo apt -y autoremove
-
-# Step 5: Setup Environment Variables
-if [ -z "$ROS_IP" ]; then
-  echo "Setting up Environment Variables..."
-  echo 'export ROS_IP=$(echo `hostname -I | cut -d" " -f1`)' >> ~/.bashrc
-  echo -e 'if [ -z "$ROS_IP" ]; then\n\texport ROS_IP=127.0.0.1\nfi' >> ~/.bashrc
-else
-  echo "Environment variables already set!"
-fi
-
 
 LOCOBOT_FOLDER=~/workspace/low_cost_ws
 if [ ! -d "$LOCOBOT_FOLDER/src" ]; then
