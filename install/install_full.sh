@@ -21,6 +21,11 @@ echo -e "\e[1;33m ******************************************** \e[0m"
 sleep 4
 start_time="$(date -u +%s)"
 
+#INIT_DIR=
+INSTALL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+cd $INSTALL_DIR
+echo $INSTALL_DIR
+
 # Update the system
 sudo apt update && sudo apt -y upgrade
 sudo apt -y autoremove
