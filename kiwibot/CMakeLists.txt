@@ -14,7 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
   kobuki_node
   realsense2_camera
   rgbd_launch
-  #rplidar_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -33,5 +32,4 @@ interbotix_xslocobot_descriptions
 kobuki_node 
 realsense2_camera 
 rgbd_launch 
-#rplidar_ros
 )
