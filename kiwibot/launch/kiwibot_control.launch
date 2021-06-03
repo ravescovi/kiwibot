@@ -8,8 +8,8 @@
   <arg name="use_rviz"                          default="false"/>
   <arg name="rviz_frame"                        default="$(arg robot_name)/base_footprint"/>
   <arg name="use_base"                          default="false"/>
-
-
+  <arg name="use_lidar"                         default="false"/>
+  <arg name="show_lidar"                        default="$(arg use_lidar)"/>
   <arg name="use_camera"                        default="false"/>
   <arg name="filters"                           default=""/>
   <arg name="align_depth"                       default="false"/>
@@ -32,9 +32,10 @@
 
   <param name="$(arg robot_name)/use_base"      value="$(arg use_base)"/>
 
-  <include file="$(find kiwibot)/launch/kiwibot_description.launch">
+  <include file="$(find interbotix_xslocobot_descriptions)/launch/xslocobot_description.launch">
     <arg name="robot_model"                       value="$(arg robot_model)"/>
     <arg name="robot_name"                        value="$(arg robot_name)"/>
+    <arg name="show_lidar"                        value="$(arg show_lidar)"/>
     <arg name="show_gripper_bar"                  value="$(arg show_gripper_bar)"/>
     <arg name="show_gripper_fingers"              value="$(arg show_gripper_fingers)"/>
     <arg name="external_urdf_loc"                 value="$(arg external_urdf_loc)"/>
@@ -82,6 +83,19 @@
       <rosparam command="load"                      file="$(find kobuki_node)/param/diagnostics.yaml" />
     </node>
   </group>
+
+  <node if="$(arg use_lidar)"
+	  name="rplidarNode"
+	  pkg="rplidar_ros"
+	  type="rplidarNode"
+	  output="screen"
+    ns="$(arg robot_name)">
+  	<param name="serial_port"       type="string" value="/dev/rplidar"/>
+  	<param name="serial_baudrate"   type="int"    value="115200"/>
+  	<param name="frame_id"          type="string" value="$(arg robot_name)/laser_frame_link"/>
+  	<param name="inverted"          type="bool"   value="false"/>
+  	<param name="angle_compensate"  type="bool"   value="true"/>
+  </node>
 
   <include if="$(arg use_camera)" file="$(find realsense2_camera)/launch/rs_camera.launch" ns="$(arg robot_name)">
     <arg name="tf_prefix"		                      value="$(arg robot_name)/camera"/>
