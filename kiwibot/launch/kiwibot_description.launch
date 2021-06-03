@@ -2,7 +2,7 @@
 
   <arg name="robot_model"                       default="locobot_wx200"/>
   <arg name="robot_name"                        default="locobot"/>
-  <arg name="arm_model"                         default="wx200"/>
+  <arg name="arm_model"                         default="mobile_wx200"/>
   <arg name="show_lidar"                        default="false"/>
   <arg name="show_gripper_bar"                  default="true"/>
   <arg name="show_gripper_fingers"              default="true"/>
