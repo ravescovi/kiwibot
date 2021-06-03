@@ -1,16 +1,21 @@
 <launch>
-
   <arg name="robot_model"                       default="locobot_wx200"/>
   <arg name="robot_name"                        default="locobot"/>
+
+
   <arg name="show_gripper_bar"                  default="true"/>
   <arg name="show_gripper_fingers"              default="true"/>
+
   <arg name="external_urdf_loc"                 default=""/>
-  <arg name="use_rviz"                          default="false"/>
-  <arg name="rviz_frame"                        default="$(arg robot_name)/base_footprint"/>
-  <arg name="use_base"                          default="false"/>
-  <arg name="use_lidar"                         default="false"/>
-  <arg name="show_lidar"                        default="$(arg use_lidar)"/>
-  <arg name="use_camera"                        default="false"/>
+  <arg name="external_srdf_loc"                 default=""/>
+
+  <arg name="use_rviz"                          default="true"/>
+  <arg name="rviz_frame"                        default="locobot/base_footprint"/>
+  <arg name="use_moveit_rviz"                   default="true"/>
+
+  <arg name="use_base"                          default="true"/>
+
+  <arg name="use_camera"                        default="true"/>
   <arg name="filters"                           default=""/>
   <arg name="align_depth"                       default="false"/>
   <arg name="color_fps"                         default="30"/>
@@ -19,23 +24,19 @@
   <arg name="depth_fps"                         default="30"/>
   <arg name="depth_width"                       default="640"/>
   <arg name="depth_height"                      default="480"/>
-  <arg name="motor_configs"                     default="$(find interbotix_xslocobot_control)/config/$(arg robot_model).yaml"/>
+
+  <arg name="mode_configs"                      default="$(find interbotix_xslocobot_moveit)/config/modes_all.yaml"/>
+  <arg name="motor_configs"                     default="$(find interbotix_xslocobot_control)/config/locobot_wx200.yaml"/>
   <arg name="load_configs"                      default="true"/>
-  <arg name="use_sim"                           default="false"/>
 
-  <arg name="xs_sdk_type" value="xs_sdk" unless="$(arg use_sim)"/>
-  <arg name="xs_sdk_type" value="xs_sdk_sim" if="$(arg use_sim)"/>
+  <arg name="xs_sdk_type" value="xs_sdk"/>
 
-  <arg if="$(eval robot_model == 'locobot_base')"     name="mode_type" value="base"/>
-  <arg unless="$(eval robot_model == 'locobot_base')" name="mode_type" value="all"/>
-  <arg name="mode_configs" default="$(find interbotix_xslocobot_control)/config/modes_$(arg mode_type).yaml"/>
 
-  <param name="$(arg robot_name)/use_base"      value="$(arg use_base)"/>
+  <param name="locobot/use_base"      value="$(arg use_base)"/>
 
-  <include file="$(find interbotix_xslocobot_descriptions)/launch/xslocobot_description.launch">
+  <include file="$(find kiwibot)/launch/kiwibot_description.launch">
     <arg name="robot_model"                       value="$(arg robot_model)"/>
     <arg name="robot_name"                        value="$(arg robot_name)"/>
-    <arg name="show_lidar"                        value="$(arg show_lidar)"/>
     <arg name="show_gripper_bar"                  value="$(arg show_gripper_bar)"/>
     <arg name="show_gripper_fingers"              value="$(arg show_gripper_fingers)"/>
     <arg name="external_urdf_loc"                 value="$(arg external_urdf_loc)"/>
@@ -84,19 +85,7 @@
     </node>
   </group>
 
-  <node if="$(arg use_lidar)"
-	  name="rplidarNode"
-	  pkg="rplidar_ros"
-	  type="rplidarNode"
-	  output="screen"
-    ns="$(arg robot_name)">
-  	<param name="serial_port"       type="string" value="/dev/rplidar"/>
-  	<param name="serial_baudrate"   type="int"    value="115200"/>
-  	<param name="frame_id"          type="string" value="$(arg robot_name)/laser_frame_link"/>
-  	<param name="inverted"          type="bool"   value="false"/>
-  	<param name="angle_compensate"  type="bool"   value="true"/>
-  </node>
-
+ 
   <include if="$(arg use_camera)" file="$(find realsense2_camera)/launch/rs_camera.launch" ns="$(arg robot_name)">
     <arg name="tf_prefix"		                      value="$(arg robot_name)/camera"/>
     <arg name="filters"                           value="$(arg filters)"/>
