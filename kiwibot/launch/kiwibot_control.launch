@@ -26,8 +26,8 @@
   <arg name="depth_width"                       default="640"/>
   <arg name="depth_height"                      default="480"/>
 
-  <arg name="mode_configs"                      default="/config/modes_all.yaml"/>
-  <arg name="motor_configs"                     default="/config/locobot_wx200.yaml"/>
+  <arg name="mode_configs"                      default="$(find interbotix_xslocobot_control)/config/modes_all.yaml"/>
+  <arg name="motor_configs"                     default="$(find interbotix_xslocobot_control)/config/$(arg robot_model).yaml"/>
 
   <arg name="load_configs"                      default="true"/>
 
