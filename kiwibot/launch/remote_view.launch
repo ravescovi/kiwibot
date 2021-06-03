@@ -3,7 +3,6 @@
   <arg name="robot_name"                        default="locobot"/>
   <arg name="rviz_frame"                        default="$(arg robot_name)/odom"/>
   <arg name="rvizconfig"                        default="$(find interbotix_xslocobot_descriptions)/rviz/xslocobot_description.rviz" />
-  <!-- <arg name="rvizconfig"                        default="$(find interbotix_xsarm_descriptions)/rviz/xsarm_description.rviz" /> -->
 
   <node
     name="rviz"

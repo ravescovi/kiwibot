@@ -2,7 +2,7 @@
 
   <arg name="robot_model"                       default="locobot_wx200"/>
   <arg name="robot_name"                        default="locobot"/>
-  <arg name="arm_model"                         default="mobile_wx200"/>
+  <arg name="arm_model"                         default="$(eval 'mobile_' + arg('robot_model').split('_')[1])"/>
   <arg name="show_lidar"                        default="false"/>
   <arg name="show_gripper_bar"                  default="true"/>
   <arg name="show_gripper_fingers"              default="true"/>
@@ -12,6 +12,9 @@
   <arg name="use_joint_pub_gui"                 default="false"/>
   <arg name="rate"                              default="10"/>
   <arg name="source_list"                       default="[]"/>
+  <arg name="use_rviz"                          default="true"/>
+  <arg name="rviz_frame"                        default="$(arg robot_name)/base_footprint"/>
+  <arg name="rvizconfig"                        default="$(find interbotix_xslocobot_descriptions)/rviz/xslocobot_description.rviz" />
   <arg name="model"                             default="$(find interbotix_xslocobot_descriptions)/urdf/locobot.urdf.xacro
                                                          arm_model:=$(arg arm_model)
                                                          robot_model:=$(arg robot_model)
@@ -45,6 +48,17 @@
     pkg="robot_state_publisher"
     type="robot_state_publisher"
     ns="$(arg robot_name)">
+  </node>
+
+  <node if="$(arg use_rviz)"
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-f $(arg rviz_frame) -d $(arg rvizconfig)"
+    ns="$(arg robot_name)">
+    <remap from="/clicked_point" to="clicked_point"/>
+    <remap from="/initialpose" to="initialpose"/>
+    <remap from="/move_base_simple/goal" to="move_base_simple/goal"/>
   </node>
 
 </launch>
