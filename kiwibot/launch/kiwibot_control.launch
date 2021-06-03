@@ -1,22 +1,16 @@
 <launch>
+
   <arg name="robot_model"                       default="locobot_wx200"/>
   <arg name="robot_name"                        default="locobot"/>
-
-
   <arg name="show_gripper_bar"                  default="true"/>
   <arg name="show_gripper_fingers"              default="true"/>
-
   <arg name="external_urdf_loc"                 default=""/>
-  <arg name="external_srdf_loc"                 default=""/>
+  <arg name="use_rviz"                          default="false"/>
+  <arg name="rviz_frame"                        default="$(arg robot_name)/base_footprint"/>
+  <arg name="use_base"                          default="false"/>
 
-  <arg name="xs_sdk_type"                       default="xs_sdk"/>
-  <arg name="use_rviz"                          default="true"/>
-  <arg name="rviz_frame"                        default="locobot/base_footprint"/>
-  <arg name="use_moveit_rviz"                   default="true"/>
 
-  <arg name="use_base"                          default="true"/>
-
-  <arg name="use_camera"                        default="true"/>
+  <arg name="use_camera"                        default="false"/>
   <arg name="filters"                           default=""/>
   <arg name="align_depth"                       default="false"/>
   <arg name="color_fps"                         default="30"/>
@@ -25,18 +19,18 @@
   <arg name="depth_fps"                         default="30"/>
   <arg name="depth_width"                       default="640"/>
   <arg name="depth_height"                      default="480"/>
-
-  <arg name="mode_configs"                      default="$(find interbotix_xslocobot_control)/config/modes_all.yaml"/>
   <arg name="motor_configs"                     default="$(find interbotix_xslocobot_control)/config/$(arg robot_model).yaml"/>
-
   <arg name="load_configs"                      default="true"/>
+  <arg name="use_sim"                           default="false"/>
 
+  <arg name="xs_sdk_type" value="xs_sdk" unless="$(arg use_sim)"/>
+  <arg name="xs_sdk_type" value="xs_sdk_sim" if="$(arg use_sim)"/>
 
-  <arg name="base_link_frame"                   default="base_link"/>
-  <arg name="show_ar_tag"                       default="false"/>
-  <arg name="use_world_frame"                   default="true"/>
+  <arg if="$(eval robot_model == 'locobot_base')"     name="mode_type" value="base"/>
+  <arg unless="$(eval robot_model == 'locobot_base')" name="mode_type" value="all"/>
+  <arg name="mode_configs" default="$(find interbotix_xslocobot_control)/config/modes_$(arg mode_type).yaml"/>
 
-  <param name="locobot/use_base"      value="$(arg use_base)"/>
+  <param name="$(arg robot_name)/use_base"      value="$(arg use_base)"/>
 
   <include file="$(find kiwibot)/launch/kiwibot_description.launch">
     <arg name="robot_model"                       value="$(arg robot_model)"/>
@@ -89,7 +83,6 @@
     </node>
   </group>
 
- 
   <include if="$(arg use_camera)" file="$(find realsense2_camera)/launch/rs_camera.launch" ns="$(arg robot_name)">
     <arg name="tf_prefix"		                      value="$(arg robot_name)/camera"/>
     <arg name="filters"                           value="$(arg filters)"/>
