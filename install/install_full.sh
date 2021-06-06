@@ -56,10 +56,11 @@ source install_loco.sh
 
 ##TODO check this install 
 # Install orb2 - Raf Noetic+openCV3 version
-#source install_orb
+source install_orb
 
 # Install pyrobot
 echo ============================= Step 5: Install Pyrobot
+# NOTE that this does not have the code at the bottom of the file included
 source install_low.sh
 
 # Dynamix controller
