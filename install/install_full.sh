@@ -34,24 +34,24 @@ else
 fi
 
 # Step 1: Install ROS
-echo ======================= Step 1: Install ROS in $PWD
+echo ============================= Step 1: Install ROS
 source install_ros.sh
 
 # Step 2: Install Realsense packages
-echo ======================= Step 2: Install Realsense packages in $PWD
+echo ============================= Step 2: Install Realsense packages
 cd $INSTALL_DIR
 source install_real.sh
 
 # Step 3: Install apriltag ROS Wrapper
-echo ======================= Step 3 in $PWD
+echo ============================= Step 3: Install apriltag ROS wrapper
+cd $INSTALL_DIR
 source install_april.sh
 
 # Step 4: Install Locobot packages
 # Step 5: Setup Environment Variables
 cd $INSTALL_DIR
-echo ======================= Step 4 in $PWD
+echo ============================= Step 4: Install Locobot packages
 source install_loco.sh
-
 
 ##TODO make this into a install 
 # Install Pangolin
@@ -67,7 +67,3 @@ source install_loco.sh
 
 # Dynamix controller
 #source install_dyna.sh
-
-
-
-
