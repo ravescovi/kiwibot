@@ -22,7 +22,11 @@ To re-define kiwibot definitions (for testing):
 
 ## Usage
 
+Set `DISPLAY` to the fake VNC display
+    export DISPLAY=:1
+
 - roslaunch kiwibot kiwibot_control.launch
+
 
 
 Original notes can be found at:
