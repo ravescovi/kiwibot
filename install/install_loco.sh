@@ -13,6 +13,8 @@ else
   exit 1
 fi
 
+pwd=$PWD
+
 # Step 4: Install Locobot packages
 shopt -s extglob
 INTERBOTIX_WS=~/workspace/interbotix_ws
@@ -77,3 +79,5 @@ if [ -z "$ROS_IP" ]; then
 else
   echo "Environment variables already set!"
 fi
+
+cd $pwd

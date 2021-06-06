@@ -13,6 +13,7 @@ else
   exit 1
 fi
 
+pwd=$PWD
 
 LOCOBOT_FOLDER=~/workspace/low_cost_ws
 if [ ! -d "$LOCOBOT_FOLDER/src" ]; then
@@ -117,8 +118,6 @@ fi
 #######################################################################################################
 # ONLY TESTED HERE!!
 
-
-
 cd $LOCOBOT_FOLDER
 chmod +x src/pyrobot/robots/LoCoBot/locobot_navigation/orb_slam2_ros/scripts/gen_cfg.py
 rosrun orb_slam2_ros gen_cfg.py
@@ -135,6 +134,6 @@ sudo service udev restart
 sudo udevadm trigger
 sudo usermod -a -G dialout $USER
 
-
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/low_cost_ws/src/pyrobot
 
+cd $pwd

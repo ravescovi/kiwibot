@@ -13,6 +13,8 @@ else
   exit 1
 fi
 
+pwd=$PWD
+
 # Step 2: Install Realsense packages
 
 # Step 2A: Install librealsense2
@@ -68,3 +70,5 @@ else
   echo "RealSense ROS Wrapper already installed!"
 fi
 source $REALSENSE_WS/devel/setup.bash
+
+cd $pwd

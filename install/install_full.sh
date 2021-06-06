@@ -39,17 +39,14 @@ source install_ros.sh
 
 # Step 2: Install Realsense packages
 echo ============================= Step 2: Install Realsense packages
-cd $INSTALL_DIR
 source install_real.sh
 
 # Step 3: Install apriltag ROS Wrapper
 echo ============================= Step 3: Install apriltag ROS wrapper
-cd $INSTALL_DIR
 source install_april.sh
 
 # Step 4: Install Locobot packages
 # Step 5: Setup Environment Variables
-cd $INSTALL_DIR
 echo ============================= Step 4: Install Locobot packages
 source install_loco.sh
 
@@ -61,9 +58,9 @@ source install_loco.sh
 # Install orb2 - Raf Noetic+openCV3 version
 #source install_orb
 
-##TODO check this installation
-# old pyrobot installation 
-#source install_low.sh
+# Install pyrobot
+echo ============================= Step 5: Install Pyrobot
+source install_low.sh
 
 # Dynamix controller
 #source install_dyna.sh
