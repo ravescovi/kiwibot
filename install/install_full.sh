@@ -15,13 +15,6 @@ fi
 
 echo "Ubuntu $ubuntu_version detected. ROS-$ROS_NAME chosen for installation.";
 
-echo -e "\e[1;33m ******************************************** \e[0m"
-echo -e "\e[1;33m The installation may take around 15 Minutes! \e[0m"
-echo -e "\e[1;33m ******************************************** \e[0m"
-sleep 4
-start_time="$(date -u +%s)"
-
-#INIT_DIR=
 INSTALL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd $INSTALL_DIR
 echo $INSTALL_DIR
@@ -41,16 +34,22 @@ else
 fi
 
 # Step 1: Install ROS
+echo ======================= Step 1: Install ROS in $PWD
 source install_ros.sh
 
 # Step 2: Install Realsense packages
+echo ======================= Step 2: Install Realsense packages in $PWD
+cd $INSTALL_DIR
 source install_real.sh
 
 # Step 3: Install apriltag ROS Wrapper
+echo ======================= Step 3 in $PWD
 source install_april.sh
 
 # Step 4: Install Locobot packages
 # Step 5: Setup Environment Variables
+cd $INSTALL_DIR
+echo ======================= Step 4 in $PWD
 source install_loco.sh
 
 

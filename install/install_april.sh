@@ -13,6 +13,8 @@ else
   exit 1
 fi
 
+rosdep update
+
 # Step 3: Install apriltag ROS Wrapper
 APRILTAG_WS=~/workspace/apriltag_ws
 if [ ! -d "$APRILTAG_WS/src" ]; then
