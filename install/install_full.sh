@@ -15,13 +15,6 @@ fi
 
 echo "Ubuntu $ubuntu_version detected. ROS-$ROS_NAME chosen for installation.";
 
-echo -e "\e[1;33m ******************************************** \e[0m"
-echo -e "\e[1;33m The installation may take around 15 Minutes! \e[0m"
-echo -e "\e[1;33m ******************************************** \e[0m"
-sleep 4
-start_time="$(date -u +%s)"
-
-#INIT_DIR=
 INSTALL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd $INSTALL_DIR
 echo $INSTALL_DIR
@@ -41,18 +34,21 @@ else
 fi
 
 # Step 1: Install ROS
+echo ============================= Step 1: Install ROS
 source install_ros.sh
 
 # Step 2: Install Realsense packages
+echo ============================= Step 2: Install Realsense packages
 source install_real.sh
 
 # Step 3: Install apriltag ROS Wrapper
+echo ============================= Step 3: Install apriltag ROS wrapper
 source install_april.sh
 
 # Step 4: Install Locobot packages
 # Step 5: Setup Environment Variables
+echo ============================= Step 4: Install Locobot packages
 source install_loco.sh
-
 
 ##TODO make this into a install 
 # Install Pangolin
@@ -60,15 +56,12 @@ source install_loco.sh
 
 ##TODO check this install 
 # Install orb2 - Raf Noetic+openCV3 version
-#source install_orb
+source install_orb
 
-##TODO check this installation
-# old pyrobot installation 
-#source install_low.sh
+# Install pyrobot
+echo ============================= Step 5: Install Pyrobot
+# NOTE that this does not have the code at the bottom of the file included
+source install_low.sh
 
 # Dynamix controller
 #source install_dyna.sh
-
-
-
-

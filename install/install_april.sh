@@ -13,9 +13,13 @@ else
   exit 1
 fi
 
+
+rosdep update
+
 # Step 3: Install apriltag ROS Wrapper
 APRILTAG_WS=~/workspace/apriltag_ws
 if [ ! -d "$APRILTAG_WS/src" ]; then
+  pwd=$PWD
   echo "Installing Apriltag ROS Wrapper..."
   mkdir -p $APRILTAG_WS/src
   cd $APRILTAG_WS/src
@@ -25,6 +29,7 @@ if [ ! -d "$APRILTAG_WS/src" ]; then
   rosdep install --from-paths src --ignore-src -r -y
   catkin_make_isolated
   echo "source $APRILTAG_WS/devel_isolated/setup.bash" >> ~/.bashrc
+  cd $pwd
 else
   echo "Apriltag ROS Wrapper already installed!"
 fi

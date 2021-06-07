@@ -13,6 +13,8 @@ else
   exit 1
 fi
 
+pwd=$PWD
+
 # Step 4: Install Locobot packages
 shopt -s extglob
 INTERBOTIX_WS=~/workspace/interbotix_ws
@@ -35,7 +37,7 @@ if [ ! -d "$INTERBOTIX_WS/src" ]; then
       cd ..
 
       ##this looks useless to us right now
-      # git clone https://github.com/Slamtec/rplidar_ros.git
+      git clone https://github.com/Slamtec/rplidar_ros.git
     fi
   fi
 
@@ -60,8 +62,8 @@ if [ ! -d "$INTERBOTIX_WS/src" ]; then
   sudo udevadm control --reload-rules && sudo udevadm trigger
 
   cd $INTERBOTIX_WS
-rosdep install --from-paths src --ignore-src -r -y
-catkin_make
+  rosdep install --from-paths src --ignore-src -r -y
+  catkin_make
   echo "source $INTERBOTIX_WS/devel/setup.bash" >> ~/.bashrc
 else
   echo "Interbotix Locobot ROS packages already installed!"
@@ -77,3 +79,5 @@ if [ -z "$ROS_IP" ]; then
 else
   echo "Environment variables already set!"
 fi
+
+cd $pwd
