@@ -15,22 +15,16 @@ else
 	exit 1
 fi
 
+PYROBOT_WS=~/workspace/pyrobot_ws
 
-sudo apt-get -y install virtualenv
-#sudo apt-get -y install ros-$ROS_OTHER_NAME-orocos-kdl ros-$ROS_OTHER_NAME-kdl-parser-py ros-$ROS_OTHER_NAME-python-orocos-kdl ros-$ROS_OTHER_NAME-trac-ik
-
-# Make a virtual env to install other dependencies (with pip)
-virtualenv_name="pyenv_pyrobot_python3"
-VIRTUALENV_FOLDER=~/${virtualenv_name}
-if [ ! -d "$VIRTUALENV_FOLDER" ]; then
+if [ ! -d "$PYROBOT_WS" ]; then
 	sudo apt-get -y install software-properties-common
 	sudo apt-get update
-	#sudo apt-get -y install python-catkin-tools python3.6-dev python3-catkin-pkg-modules python3-numpy python3-yaml
 	sudo apt-get -y install python3-catkin-tools python3-dev python3-catkin-pkg-modules python3-numpy python3-yaml
-	sudo apt-get -y install python3-tk python3.8-tk
-	#virtualenv -p /usr/bin/python3.6 $VIRTUALENV_FOLDER
-	virtualenv -p /usr/bin/python3 $VIRTUALENV_FOLDER
-	source ~/${virtualenv_name}/bin/activate
+	sudo apt-get -y install python3-tk 
+
+	virtualenv -p /usr/bin/python3 $PYROBOT_WS
+	source ~/pyrobot/bin/activate
 	pip install catkin_pkg pyyaml empy rospkg
 	python -m pip install --upgrade numpy
 	echo "HERE" $PWD
