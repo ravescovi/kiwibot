@@ -50,17 +50,14 @@ source install_april.sh
 echo ============================= Step 4: Install Locobot packages
 source install_loco.sh
 
-##TODO make this into a install 
-# Install Pangolin
-#source install_pang.sh
 
-##TODO check this install 
-# Install orb2 - Raf Noetic+openCV3 version
-source install_orb
+echo ============================= Step 5.1: Install Extra Libs
+source install_create.sh
+source install_pang.sh
+source install_orb.sh
 
 # Install pyrobot
 echo ============================= Step 5: Install Pyrobot
-# NOTE that this does not have the code at the bottom of the file included
 source install_low.sh
 
 # Dynamix controller

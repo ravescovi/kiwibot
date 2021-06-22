@@ -24,28 +24,19 @@ if [ $(dpkg-query -W -f='${Status}' librealsense2 2>/dev/null | grep -c "ok inst
   # https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md  
   sudo apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
   sudo add-apt-repository "deb https://librealsense.intel.com/Debian/apt-repo $(lsb_release -sc) main" -u
-  # sudo add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo $(lsb_release -sc) main" -u
-  if [ $ubuntu_version == "16.04" ]; then
-    version="2.40.0-0~realsense0.3813"
-  elif [ $ubuntu_version == "18.04" ]; then
-    version="2.40.0-0~realsense0.3814"
-  elif [ $ubuntu_version == "20.04" ]; then
-    version="2.45.0-0~realsense0.4552"
-    # version="2.40.0-0~realsense0.3815"
-  fi
 
-  sudo apt -y install librealsense2-udev-rules=${version}
+  sudo apt -y install librealsense2-udev-rules
   sudo apt -y install librealsense2-dkms
-  sudo apt -y install librealsense2=${version}
-  sudo apt -y install librealsense2-gl=${version}
-  sudo apt -y install librealsense2-gl-dev=${version}
-  sudo apt -y install librealsense2-gl-dbg=${version}
-  sudo apt -y install librealsense2-net=${version}
-  sudo apt -y install librealsense2-net-dev=${version}
-  sudo apt -y install librealsense2-net-dbg=${version}
-  sudo apt -y install librealsense2-utils=${version}
-  sudo apt -y install librealsense2-dev=${version}
-  sudo apt -y install librealsense2-dbg=${version}
+  sudo apt -y install librealsense2
+  sudo apt -y install librealsense2-gl
+  sudo apt -y install librealsense2-gl-dev
+  sudo apt -y install librealsense2-gl-dbg
+  sudo apt -y install librealsense2-net
+  sudo apt -y install librealsense2-net-dev
+  sudo apt -y install librealsense2-net-dbg
+  sudo apt -y install librealsense2-utils
+  sudo apt -y install librealsense2-dev
+  sudo apt -y install librealsense2-dbg
   sudo apt-mark hold librealsense2*
   sudo apt -y install ros-$ROS_NAME-ddynamic-reconfigure
 else

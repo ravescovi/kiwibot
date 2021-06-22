@@ -40,15 +40,11 @@ if [ ! -d "$PYROBOT_PYTHON3_WS/src" ]; then
 	mkdir -p $PYROBOT_PYTHON3_WS/src
 	cd $PYROBOT_PYTHON3_WS/src
 
-	if [ $ROS_NAME == "kinetic" ]; then
-		git clone -b indigo-devel https://github.com/ros/geometry
-		git clone -b indigo-devel https://github.com/ros/geometry2
-		git clone -b python3_patch https://github.com/kalyanvasudev/vision_opencv.git
-	else
-		git clone -b melodic-devel https://github.com/ros/geometry
-		git clone -b melodic-devel https://github.com/ros/geometry2
-		git clone -b python3_patch_melodic https://github.com/kalyanvasudev/vision_opencv.git
-	fi
+
+git clone https://github.com/ros/geometry
+git clone https://github.com/ros/geometry2
+	# git clone -https://github.com/kalyanvasudev/vision_opencv.git
+
 	
 	git clone -b patch-1 https://github.com/kalyanvasudev/ros_comm.git
 

@@ -16,12 +16,16 @@ fi
 
 pwd=$PWD
 
+
+##creates the catkin workspace
 LOCOBOT_FOLDER=~/workspace/low_cost_ws
 if [ ! -d "$LOCOBOT_FOLDER/src" ]; then
 	mkdir -p $LOCOBOT_FOLDER/src
 	cd $LOCOBOT_FOLDER/src
 	catkin_init_workspace
 fi
+
+##sets up the pyrobot facebook env
 if [ ! -d "$LOCOBOT_FOLDER/src/pyrobot" ]; then
   cd $LOCOBOT_FOLDER/src
   git clone https://github.com/facebookresearch/pyrobot.git
@@ -36,33 +40,31 @@ if [ ! -d "$LOCOBOT_FOLDER/src/pyrobot" ]; then
   sed -i 's/\(float restJnts\[5\] = \)\(.*\)/\1{0, -1.30, 1.617, 0.5, 0};/' locobot_controller.cpp
 fi
 
+##downloads all third party things 
 if [ ! -d "$LOCOBOT_FOLDER/src/pyrobot/robots/LoCoBot/thirdparty" ]; then
+	cd $LOCOBOT_FOLDER/src/pyrobot/robots/LoCoBot
+	mkdir thirdparty
+	cd thirdparty
+#	git clone https://github.com/AutonomyLab/create_autonomy
+	git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
+	git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+	git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
+	git clone https://github.com/ros-controls/ros_control.git
+#	git clone https://github.com/s-gupta/ar_track_alvar.git
 
-  cd $LOCOBOT_FOLDER/src/pyrobot/robots/LoCoBot
-  mkdir thirdparty
-  cd thirdparty
-  git clone https://github.com/AutonomyLab/create_autonomy
-  git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
-  git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
-  git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
-  git clone https://github.com/ros-controls/ros_control.git
-  git clone https://github.com/s-gupta/ar_track_alvar.git
-  git clone https://github.com/ravescovi/ORB_SLAM2.git
 
-		cd create_autonomy && git checkout 90e597ea4d85cde1ec32a1d43ea2dd0b4cbf481c && cd ..
-		cd dynamixel-workbench && git checkout bf60cf8f17e8385f623cbe72236938b5950d3b56 && cd ..
-		cd DynamixelSDK && git checkout 05dcc5c551598b4d323bf1fb4b9d1ee03ad1dfd9 && cd ..
-		cd dynamixel-workbench-msgs && git checkout 93856f5d3926e4d7a63055c04a3671872799cc86 && cd ..
-		cd ros_control && git checkout cd39acfdb2d08dc218d04ff98856b0e6a525e702 && cd ..
-		cd ar_track_alvar && git checkout a870d5f00a548acb346bfcc89d42b997771d71a3 && cd ..
 fi
+
+##hummm??
+#cd ~/workspace/low_cost_ws/src/pyrobot/robots/LoCoBot/locobot_navigation
+#rm -rf orb_slam2_ros
+#git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git
 
 cd $LOCOBOT_FOLDER
 rosdep update 
 rosdep install --from-paths src/pyrobot -i -y
-cd $LOCOBOT_FOLDER/src/pyrobot/robots/LoCoBot/install
-chmod +x install_orb_slam2.sh
-source install_orb_slam2.sh
+
+
 cd $LOCOBOT_FOLDER
 if [ -d "$LOCOBOT_FOLDER/devel" ]; then
 	rm -rf $LOCOBOT_FOLDER/devel
@@ -98,7 +100,7 @@ if [ ! -d "$LOCOBOT_FOLDER/src/turtlebot" ]; then
 	git clone https://github.com/yujinrobot/kobuki_desktop.git
 	cd kobuki_desktop/
 	rm -r kobuki_qtestsuite
-	cd -
+	cd ..
 	git clone https://github.com/yujinrobot/kobuki.git
 	cd kobuki && git checkout $ROS_OTHER_NAME && cd ..
 	mv kobuki/kobuki_description kobuki/kobuki_bumper2pc \
@@ -113,6 +115,23 @@ if [ ! -d "$LOCOBOT_FOLDER/src/turtlebot" ]; then
 	rm -rf yujin_ocs
 fi
 
+cd $LOCOBOT_FOLDER
+source /opt/ros/$ROS_NAME/setup.bash
+
+# pip install catkin_pkg pyyaml empy rospkg
+catkin_make
+echo "source $LOCOBOT_FOLDER/devel/setup.bash" >> ~/.bashrc
+source $LOCOBOT_FOLDER/devel/setup.bash
+
+cd $LOCOBOT_FOLDER/src/pyrobot
+chmod +x install_pyrobot.sh
+source install_pyrobot.sh  -p 3
+
+virtualenv_name="pyenv_pyrobot_python3"
+cd $LOCOBOT_FOLDER/src/pyrobot/robots/LoCoBot
+source ~/${virtualenv_name}/bin/activate
+pip3 install --ignore-installed -r requirements_python3.txt
+deactivate
 
 #######################################################################################################
 #######################################################################################################
