@@ -118,3 +118,11 @@ pip install -e .
 
 
 
+pip3 install pylint
+pip3 install black
+
+
+cd ~/workspace
+wget -N -O vscode-linux-deb.arm64.deb https://update.code.visualstudio.com/$VERSION/linux-deb-arm64/stable
+sudo apt install ./vscode-linux-deb.arm64.deb
+code --install-extension ms-python.python --force
