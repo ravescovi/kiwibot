@@ -1,6 +1,8 @@
 # KiwiBot Endeavours at GLabs.
 
 
+# outdated!
+
 ## Installation 
 
     git clone https://github.com/ravescovi/kiwibot

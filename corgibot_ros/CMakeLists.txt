@@ -1,13 +1,30 @@
-<?xml version="1.0"?>
-<launch>
-  <arg name="config" default="$(find create_bringup)/config/default.yaml" />
-  <arg name="desc" default="true" />
+cmake_minimum_required(VERSION 2.8.3)
+project(kiwibot)
 
-  <node name="create_driver" pkg="create_driver" type="create_driver" output="screen">
-    <rosparam command="load" file="$(arg config)" />
-    <param name="robot_model" value="CREATE_2" />
-  </node>
+## Compile as C++11, supported in ROS Kinetic and newer
+# add_compile_options(-std=c++11)
 
-  <!-- Robot description -->
-  <include if="$(arg desc)" file="$(find create_description)/launch/create_2.launch" />
-</launch>
+## Find catkin macros and libraries
+## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
+  create_driver
+  create_description
+  realsense2_camera
+  rgbd_launch
+)
+
+## System dependencies are found with CMake's conventions
+# find_package(Boost REQUIRED COMPONENTS system)
+
+###################################
+## catkin specific configuration ##
+###################################
+## The catkin_package macro generates cmake config files for your package
+## Declare things to be passed to dependent projects
+catkin_package(
+CATKIN_DEPENDS 
+create_driver
+realsense2_camera 
+rgbd_launch 
+)

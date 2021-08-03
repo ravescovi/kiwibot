@@ -16,6 +16,8 @@
 
   <exec_depend>create_description</exec_depend>
   <exec_depend>create_driver</exec_depend>
+  <exec_depend>realsense2_camera</exec_depend>
+
 
   <export>
   </export>
