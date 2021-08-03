@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>corgibot_bringup</name>
+  <version>0.0.1</version>
+  <description>Launch and configuration files for common accessories when working with Create/Roomba platforms.</description>
+
+  <maintainer email="ravescovi@gmail.com">Rafael Vescovi</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://wiki.ros.org/create_bringup</url>
+
+  <author email="ravescovi@gmail.com">Rafael Vescovi</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>create_description</exec_depend>
+  <exec_depend>create_driver</exec_depend>
+
+  <export>
+  </export>
+</package>
